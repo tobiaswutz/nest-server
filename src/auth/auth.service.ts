@@ -4,7 +4,8 @@ import { AuthDto } from './dto';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import * as argon from 'argon2';
+// import * as argon from 'argon2';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -15,7 +16,8 @@ export class AuthService {
   ) { }
 
   async signup(dto: AuthDto) {
-    const hash = await argon.hash(dto.password);
+    // const hash = await argon.hash(dto.password);
+    const hash = await bcrypt.hash(dto.password, 10);
     try {
       const user = await this.prisma.user.create({ data: { email: dto.email, hash, }, });
       return this.signToken(user.id, user.email);
@@ -29,7 +31,8 @@ export class AuthService {
     const user = await this.prisma.user.findUnique({ where: { email: dto.email, }, });
     if (!user) { throw new ForbiddenException('Invalid credentials'); }
 
-    const pwMatches = await argon.verify(user.hash, dto.password);
+    // const pwMatches = await argon.verify(user.hash, dto.password);
+    const pwMatches = await bcrypt.compare(dto.password, user.hash);
     if (!pwMatches) { throw new ForbiddenException('Invalid credentials'); }
     return this.signToken(user.id, user.email);
   }
