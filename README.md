@@ -4,7 +4,3 @@
 
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
 [circleci-url]: https://circleci.com/gh/nestjs/nest
-
-
-info:
-Normaly i would use Argon2 for hashing passwords, but its not working on my m1 mac
