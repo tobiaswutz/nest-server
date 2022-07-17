@@ -12,17 +12,16 @@ datasource db {
 
 model User {
   id        Int      @id @default(autoincrement())
+  firstName String
+  lastName  String
+  email String @unique
+  hash  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  email String @unique
-  hash  String
-
-  firstName String?
-  lastName  String?
-
   @@map("users")
   bookmarks Bookmark[]
+  transactions Transaction[]
 }
 
 model Bookmark {
@@ -38,4 +37,16 @@ model Bookmark {
   user   User @relation(fields: [userId], references: [id])
 
   @@map("bookmarks")
+}
+
+model Transaction {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  amount Float
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  @@map("transactions")
 }
