@@ -21,7 +21,6 @@ model User {
 
   @@map("users")
   bookmarks Bookmark[]
-  transactions Transaction[]
 }
 
 model Bookmark {
@@ -37,16 +36,4 @@ model Bookmark {
   user   User @relation(fields: [userId], references: [id])
 
   @@map("bookmarks")
-}
-
-model Transaction {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  amount Float
-  userId Int
-  user   User @relation(fields: [userId], references: [id])
-
-  @@map("transactions")
 }
