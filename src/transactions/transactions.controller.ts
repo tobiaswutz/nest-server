@@ -14,7 +14,7 @@ export class TransactionsController {
 
     @Get()
     getTransaction(@GetUser('id') userid: number) {
-        return this.transactionsService.getTransaction(userid);
+        return this.transactionsService.getTransactions(userid);
     }
 
     @Get(':id')

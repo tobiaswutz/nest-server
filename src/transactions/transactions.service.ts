@@ -9,7 +9,7 @@ export class TransactionsService {
         private prisma: PrismaService,
     ) { }
 
-    getTransaction(userId: number) {
+    getTransactions(userId: number) {
         return this.prisma.transaction.findMany({
             where: {
                 userId,

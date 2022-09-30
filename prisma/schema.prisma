@@ -11,15 +11,16 @@ datasource db {
 }
 
 model User {
-  id           Int           @id @default(autoincrement())
-  firstName    String
-  lastName     String
-  email        String        @unique
-  hash         String
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  bookmarks    Bookmark[]
-  transactions Transaction[]
+  id               Int               @id @default(autoincrement())
+  firstName        String
+  lastName         String
+  email            String            @unique
+  hash             String
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  bookmarks        Bookmark[]
+  transactions     Transaction[]
+  transaction_list TransactionList[]
 
   @@map("users")
 }
@@ -39,27 +40,45 @@ model Bookmark {
   @@map("bookmarks")
 }
 
+model TransactionList {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId Int
+  name        String
+  description String?
+
+  user   User @relation(fields: [userId], references: [id])
+
+  transactions Transaction[]
+
+  @@map("transaction_lists")
+}
+
 model Transaction {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  inflowSymbol  String
-  outflowSymbol String
-  inflowAmount  Decimal
-  outflowAmount Decimal
+  userId                Int
+  inflowSymbol          String
+  outflowSymbol         String
+  inflowAmount          Decimal
+  outflowAmount         Decimal
   inflowSymbolUsdPrice  Decimal
   outflowSymbolUsdPrice Decimal
-  transactionTime String
-  feeSymbol       String?
-  feeAmount       Decimal?
-  description     String?
-  walletAddress   String?
-  tradingPlatform String?
-  transactionId   String?
+  transactionTime       String
+  feeSymbol             String?
+  feeAmount             Decimal?
+  description           String?
+  walletAddress         String?
+  tradingPlatform       String?
+  transactionId         String?
+  transactionListId     Int?
 
-  userId Int
-  user   User @relation(fields: [userId], references: [id])
+  user         User             @relation(fields: [userId], references: [id])
+  transactions TransactionList? @relation(fields: [transactionListId], references: [id])
 
   @@map("transactions")
 }
