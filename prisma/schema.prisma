@@ -11,16 +11,18 @@ datasource db {
 }
 
 model User {
-  id               Int               @id @default(autoincrement())
-  firstName        String
-  lastName         String
-  email            String            @unique
-  hash             String
-  createdAt        DateTime          @default(now())
-  updatedAt        DateTime          @updatedAt
-  bookmarks        Bookmark[]
-  transactions     Transaction[]
-  transaction_list TransactionList[]
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  firstName String
+  lastName  String
+  email     String @unique
+  hash      String
+
+  bookmarks         Bookmark[]
+  transactions      Transaction[]
+  transaction_lists TransactionList[]
 
   @@map("users")
 }
@@ -45,10 +47,10 @@ model TransactionList {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  userId Int
   name        String
   description String?
 
+  userId Int
   user   User @relation(fields: [userId], references: [id])
 
   transactions Transaction[]
@@ -61,24 +63,25 @@ model Transaction {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  userId                Int
+  userId            Int
+  transactionListId Int
+
   inflowSymbol          String
   outflowSymbol         String
   inflowAmount          Decimal
   outflowAmount         Decimal
   inflowSymbolUsdPrice  Decimal
   outflowSymbolUsdPrice Decimal
-  transactionTime       String
+  transactionTime       DateTime?
   feeSymbol             String?
   feeAmount             Decimal?
   description           String?
   walletAddress         String?
   tradingPlatform       String?
   transactionId         String?
-  transactionListId     Int?
 
-  user         User             @relation(fields: [userId], references: [id])
-  transactions TransactionList? @relation(fields: [transactionListId], references: [id])
+  user            User            @relation(fields: [userId], references: [id])
+  transactionList TransactionList @relation(fields: [transactionListId], references: [id])
 
   @@map("transactions")
 }

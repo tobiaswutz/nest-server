@@ -9,10 +9,11 @@ export class TransactionsService {
         private prisma: PrismaService,
     ) { }
 
-    getTransactions(userId: number) {
+    getTransactionsByTransactionListId(userId: number, transactionListId: number) {
         return this.prisma.transaction.findMany({
             where: {
                 userId,
+                transactionListId,
             },
         });
     }
@@ -21,17 +22,19 @@ export class TransactionsService {
     getTransactionById(userId: number, transactionId: number) {
         return this.prisma.transaction.findFirst({
             where: {
-                id: transactionId,
                 userId,
+                id: transactionId,
             },
         });
     }
 
 
-    async createTransaction(userId: number, dto: CreateTransactionDto) {
+    async createTransaction(userId: number, transactionListId: number, dto: CreateTransactionDto) {
+        // console.log(userId, transactionListId, dto);
         const transaction = await this.prisma.transaction.create({
             data: {
                 userId,
+                transactionListId: transactionListId,
                 ...dto,
             },
         });

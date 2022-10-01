@@ -1,56 +1,41 @@
 import { Decimal } from "@prisma/client/runtime";
-import { IsDate, IsDecimal, IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { IsDate, IsDateString, IsDecimal, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 
 export class EditTransactionDto {
     @IsString()
-    @IsOptional()
-    inflowSymbol?: string;
-
-    @IsString()
-    @IsOptional()
-    outflowSymbol?: string;
-
-    @IsDecimal()
-    @IsOptional()
-
-    inflowAmount?: Decimal
-
-    @IsDecimal()
-    @IsOptional()
-    outflowAmount?: Decimal
-
-    @IsDecimal()
-    @IsOptional()
-    inflowSymbolUsdPrice?: Decimal
-
-    @IsDecimal()
-    @IsOptional()
-    outflowSymbolUsdPrice?: Decimal
-
     @IsNotEmpty()
+    inflowSymbol: string;
     @IsString()
-    transactionTime: string;
-
-    @IsOptional()
-    @IsString()
-    feeSymbol?: string;
-
-    @IsOptional()
+    @IsNotEmpty()
+    outflowSymbol: string;
     @IsDecimal()
+    @IsNotEmpty()
+    inflowAmount: Decimal;
+    @IsDecimal()
+    @IsNotEmpty()
+    outflowAmount: Decimal;
+    @IsDecimal()
+    @IsNotEmpty()
+    inflowSymbolUsdPrice: Decimal;
+    @IsNotEmpty()
+    @IsDecimal()
+    outflowSymbolUsdPrice: Decimal;
+    @IsOptional()
+    transactionTime?: Date;
+    @IsString()
+    @IsOptional()
+    feeSymbol?: string;
+    @IsOptional()
     feeAmount?: Decimal;
-
     @IsOptional()
     @IsString()
     description?: string;
-
     @IsOptional()
     @IsString()
     walletAddress?: string;
-
     @IsOptional()
     @IsString()
     tradingPlatform?: string;
-
     @IsOptional()
     @IsString()
     transactionId?: string;
