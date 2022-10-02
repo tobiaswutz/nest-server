@@ -1,5 +1,5 @@
 import { Decimal } from "@prisma/client/runtime";
-import { IsDate, IsDateString, IsDecimal, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
+import { IsDecimal, IsOptional, IsString } from "class-validator";
 
 export class EditTransactionDto {
     @IsOptional()
