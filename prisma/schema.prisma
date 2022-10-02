@@ -63,25 +63,22 @@ model Transaction {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  baseSymbol  String
+  quoteSymbol String
+  baseAmount  Decimal
+  quoteAmount Decimal
+  side        String
+  price       Decimal
+  filledTime  DateTime
+  feeSymbol   String?
+  feeAmount   Decimal?
+  exchange    String?
+  externalId  String?
+
   userId            Int
   transactionListId Int
-
-  inflowSymbol          String
-  outflowSymbol         String
-  inflowAmount          Decimal
-  outflowAmount         Decimal
-  inflowSymbolUsdPrice  Decimal
-  outflowSymbolUsdPrice Decimal
-  transactionTime       DateTime?
-  feeSymbol             String?
-  feeAmount             Decimal?
-  description           String?
-  walletAddress         String?
-  tradingPlatform       String?
-  transactionId         String?
-
-  user            User            @relation(fields: [userId], references: [id])
-  transactionList TransactionList @relation(fields: [transactionListId], references: [id])
+  user              User            @relation(fields: [userId], references: [id])
+  transactionList   TransactionList @relation(fields: [transactionListId], references: [id])
 
   @@map("transactions")
 }

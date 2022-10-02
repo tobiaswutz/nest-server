@@ -4,39 +4,43 @@ import { IsDate, IsDateString, IsDecimal, IsNotEmpty, IsNumber, IsOptional, IsSt
 export class CreateTransactionDto {
     @IsString()
     @IsNotEmpty()
-    inflowSymbol: string;
+    baseSymbol: string;
+
+    @IsString()
+    quoteSymbo: string;
+    
+    @IsDecimal()
+    @IsNotEmpty()
+    baseAmount: Decimal;
+
+    @IsDecimal()
+    @IsNotEmpty()
+    quoteAmount: Decimal;
+
     @IsString()
     @IsNotEmpty()
-    outflowSymbol: string;
+    side: string;
+
     @IsDecimal()
     @IsNotEmpty()
-    inflowAmount: Decimal;
-    @IsDecimal()
+    price: Decimal;
+
     @IsNotEmpty()
-    outflowAmount: Decimal;
-    @IsDecimal()
-    @IsNotEmpty()
-    inflowSymbolUsdPrice: Decimal;
-    @IsNotEmpty()
-    @IsDecimal()
-    outflowSymbolUsdPrice: Decimal;
+    filledTime: Date;
+
     @IsOptional()
-    transactionTime?: Date;
     @IsString()
-    @IsOptional()
     feeSymbol?: string;
+
     @IsOptional()
+    @IsDecimal()
     feeAmount?: Decimal;
+
     @IsOptional()
     @IsString()
-    description?: string;
+    exchange?: string;
+
     @IsOptional()
     @IsString()
-    walletAddress?: string;
-    @IsOptional()
-    @IsString()
-    tradingPlatform?: string;
-    @IsOptional()
-    @IsString()
-    transactionId?: string;
-}
+    externalId?: string;
+};

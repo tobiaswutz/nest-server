@@ -30,11 +30,10 @@ export class TransactionsService {
 
 
     async createTransaction(userId: number, transactionListId: number, dto: CreateTransactionDto) {
-        // console.log(userId, transactionListId, dto);
         const transaction = await this.prisma.transaction.create({
             data: {
                 userId,
-                transactionListId: transactionListId,
+                transactionListId,
                 ...dto,
             },
         });
