@@ -4,30 +4,30 @@ import { IsDate, IsDateString, IsDecimal, IsNotEmpty, IsNumber, IsOptional, IsSt
 export class EditTransactionDto {
     @IsOptional()
     @IsString()
-    baseSymbol: string;
+    baseSymbol?: string;
 
     @IsOptional()
     @IsString()
-    quoteSymbo: string;
+    quoteSymbo?: string;
 
     @IsOptional()
     @IsDecimal()
-    baseAmount: Decimal;
+    baseAmount?: Decimal;
 
     @IsOptional()
     @IsDecimal()
-    quoteAmount: Decimal;
+    quoteAmount?: Decimal;
 
     @IsOptional()
     @IsString()
-    side: string;
+    side?: string;
 
     @IsOptional()
     @IsDecimal()
-    price: Decimal;
+    price?: Decimal;
 
     @IsOptional()
-    filledTime: Date;
+    filledTime?: Date;
 
     @IsOptional()
     @IsString()

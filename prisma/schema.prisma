@@ -69,7 +69,7 @@ model Transaction {
   quoteAmount Decimal
   side        String
   price       Decimal
-  filledTime  DateTime
+  filledTime  DateTime?
   feeSymbol   String?
   feeAmount   Decimal?
   exchange    String?
@@ -77,8 +77,9 @@ model Transaction {
 
   userId            Int
   transactionListId Int
-  user              User            @relation(fields: [userId], references: [id])
-  transactionList   TransactionList @relation(fields: [transactionListId], references: [id])
+  
+  user              User              @relation(fields: [userId], references: [id])
+  transactionList   TransactionList   @relation(fields: [transactionListId], references: [id])
 
   @@map("transactions")
 }

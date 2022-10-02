@@ -1,5 +1,5 @@
 import { Decimal } from "@prisma/client/runtime";
-import { IsDate, IsDateString, IsDecimal, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
+import { IsDecimal, IsNotEmpty, IsOptional, IsString } from "class-validator";
 
 export class CreateTransactionDto {
     @IsString()
@@ -7,8 +7,9 @@ export class CreateTransactionDto {
     baseSymbol: string;
 
     @IsString()
-    quoteSymbo: string;
-    
+    @IsNotEmpty()
+    quoteSymbol: string;
+
     @IsDecimal()
     @IsNotEmpty()
     baseAmount: Decimal;
@@ -25,8 +26,8 @@ export class CreateTransactionDto {
     @IsNotEmpty()
     price: Decimal;
 
-    @IsNotEmpty()
-    filledTime: Date;
+    @IsOptional()
+    filledTime?: Date;
 
     @IsOptional()
     @IsString()
@@ -43,4 +44,4 @@ export class CreateTransactionDto {
     @IsOptional()
     @IsString()
     externalId?: string;
-};
+}
