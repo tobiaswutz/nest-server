@@ -10,11 +10,11 @@ export class CreateTransactionDto {
     @IsNotEmpty()
     quoteSymbol: string;
 
-    @IsDecimal()
+    // @IsDecimal()
     @IsNotEmpty()
     baseAmount: Decimal;
 
-    @IsDecimal()
+    // @IsDecimal()
     @IsNotEmpty()
     quoteAmount: Decimal;
 
@@ -22,7 +22,7 @@ export class CreateTransactionDto {
     @IsNotEmpty()
     side: string;
 
-    @IsDecimal()
+    // @IsDecimal()
     @IsNotEmpty()
     price: Decimal;
 
@@ -34,7 +34,7 @@ export class CreateTransactionDto {
     feeSymbol?: string;
 
     @IsOptional()
-    @IsDecimal()
+    // @IsDecimal()
     feeAmount?: Decimal;
 
     @IsOptional()
