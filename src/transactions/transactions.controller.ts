@@ -12,9 +12,9 @@ export class TransactionsController {
         private transactionsService: TransactionsService,
     ) { }
 
-    @Get(':transactionListId')
-    getTransactionByTransactionListId(@GetUser('id') userid: number, @Param('transactionListId', ParseIntPipe) transactionListId: number) {
-        return this.transactionsService.getTransactionsByTransactionListId(userid, transactionListId);
+    @Get(':collectionId')
+    getTransactionByCollectionId(@GetUser('id') userid: number, @Param('collectionId', ParseIntPipe) collectionId: number) {
+        return this.transactionsService.getTransactionsByCollectionId(userid, collectionId);
     }
 
     @Get(':transactionId')
@@ -22,9 +22,9 @@ export class TransactionsController {
         return this.transactionsService.getTransactionById(userid, transactionId);
     }
 
-    @Post(':transactionListId')
-    createTransaction(@GetUser('id') userid: number, @Param('transactionListId', ParseIntPipe) transactionListId: number, @Body() dto: CreateTransactionDto) {
-        return this.transactionsService.createTransaction(userid, transactionListId, dto);
+    @Post(':collectionId')
+    createTransaction(@GetUser('id') userid: number, @Param('collectionId', ParseIntPipe) collectionId: number, @Body() dto: CreateTransactionDto) {
+        return this.transactionsService.createTransaction(userid, collectionId, dto);
     }
 
     @Patch(':id')

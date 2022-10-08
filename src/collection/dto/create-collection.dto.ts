@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsOptional, IsString } from "class-validator";
 
-export class CreateTransactionListDto {
+export class CreateCollectionDto {
     @IsString()
     @IsNotEmpty()
     name: string;

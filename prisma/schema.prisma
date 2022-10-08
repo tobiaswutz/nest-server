@@ -20,9 +20,9 @@ model User {
   email     String @unique
   hash      String
 
-  bookmarks         Bookmark[]
-  transactions      Transaction[]
-  transaction_lists TransactionList[]
+  bookmarks    Bookmark[]
+  transactions Transaction[]
+  collections  Collection[]
 
   @@map("users")
 }
@@ -42,7 +42,7 @@ model Bookmark {
   @@map("bookmarks")
 }
 
-model TransactionList {
+model Collection {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -55,7 +55,7 @@ model TransactionList {
 
   transactions Transaction[]
 
-  @@map("transaction_lists")
+  @@map("collections")
 }
 
 model Transaction {
@@ -76,10 +76,10 @@ model Transaction {
   externalId  String?
 
   userId            Int
-  transactionListId Int
-  
-  user              User              @relation(fields: [userId], references: [id])
-  transactionList   TransactionList   @relation(fields: [transactionListId], references: [id])
+  collectionId Int
+
+  user            User            @relation(fields: [userId], references: [id])
+  collection Collection @relation(fields: [collectionId], references: [id])
 
   @@map("transactions")
 }

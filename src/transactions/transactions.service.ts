@@ -9,11 +9,11 @@ export class TransactionsService {
         private prisma: PrismaService,
     ) { }
 
-    getTransactionsByTransactionListId(userId: number, transactionListId: number) {
+    getTransactionsByCollectionId(userId: number, collectionId: number) {
         return this.prisma.transaction.findMany({
             where: {
                 userId,
-                transactionListId,
+                collectionId,
             },
         });
     }
@@ -29,11 +29,11 @@ export class TransactionsService {
     }
 
 
-    async createTransaction(userId: number, transactionListId: number, dto: CreateTransactionDto) {
+    async createTransaction(userId: number, collectionId: number, dto: CreateTransactionDto) {
         const transaction = await this.prisma.transaction.create({
             data: {
                 userId,
-                transactionListId,
+                collectionId,
                 ...dto,
             },
         });

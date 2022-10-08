@@ -5,10 +5,10 @@ import { UserModule } from './user/user.module';
 import { BookmarkModule } from './bookmark/bookmark.module';
 import { ConfigModule } from '@nestjs/config';
 import { TransactionsModule } from './transactions/transactions.module';
-import { TransactionListModule } from './transaction-list/transaction-list.module';
+import { CollectionModule } from './collection/collection.module';
 
 @Module({
-  imports: [AuthModule, UserModule, BookmarkModule, TransactionsModule, TransactionListModule, PrismaModule, ConfigModule.forRoot({
+  imports: [AuthModule, UserModule, BookmarkModule, TransactionsModule, CollectionModule, PrismaModule, ConfigModule.forRoot({
     isGlobal: true,
   })],
 })
