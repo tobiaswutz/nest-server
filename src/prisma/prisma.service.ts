@@ -18,7 +18,7 @@ export class PrismaService extends PrismaClient {
     return this.$transaction([ // transactions is to delete the data in a specific order / TW
       this.bookmark.deleteMany(),
       this.transaction.deleteMany(),
-      this.transactionList.deleteMany(),
+      this.collection.deleteMany(),
       this.user.deleteMany(),
     ]);
   }
