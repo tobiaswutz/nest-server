@@ -18,8 +18,8 @@ export class CollectionController {
     }
 
     @Get(':id')
-    getCollectionById(@GetUser('id') userid: number, @Param('id', ParseIntPipe) bookmarkId: number) {
-        return this.collectionService.getCollectionById(userid, bookmarkId);
+    getCollectionById(@GetUser('id') userid: number, @Param('id', ParseIntPipe) collectionid: number) {
+        return this.collectionService.getCollectionById(userid, collectionid);
     }
 
     @Post()
@@ -28,14 +28,14 @@ export class CollectionController {
     }
 
     @Patch(':id')
-    eidtCollectionById(@GetUser('id') userid: number, @Param('id', ParseIntPipe) bookmarkId: number, @Body() dto: EditCollectionDto) {
-        return this.collectionService.eidtCollectionById(userid, bookmarkId, dto);
+    edittCollectionById(@GetUser('id') userid: number, @Param('id', ParseIntPipe) collectionid: number, @Body() dto: EditCollectionDto) {
+        return this.collectionService.eidtCollectionById(userid, collectionid, dto);
     }
 
     @HttpCode(HttpStatus.NO_CONTENT)
     @Delete(':id')
-    deleteCollectionById(@GetUser('id') userid: number, @Param('id', ParseIntPipe) bookmarkId: number) {
-        return this.collectionService.deleteCollectionById(userid, bookmarkId);
+    deleteCollectionById(@GetUser('id') userid: number, @Param('id', ParseIntPipe) collectionid: number) {
+        return this.collectionService.deleteCollectionById(userid, collectionid);
     }
 
 }
