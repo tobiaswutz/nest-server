@@ -18,6 +18,38 @@ export class TransactionsService {
         });
     }
 
+    getTransactionsByCollectionIdPaginated(userId: number, collectionId: number, page: number, take: number) {
+
+        const skip = take * (page - 1);
+
+        const numberOfTransactions = this.prisma.transaction.count({
+            where: {
+                userId,
+                collectionId,
+            },
+        });
+
+        const transactions = this.prisma.transaction.findMany({
+            where: {
+                userId,
+                collectionId,
+            },
+            orderBy: {
+                filledTime: 'desc',
+            },
+            take,
+            skip,
+        });
+
+        return Promise.all([numberOfTransactions, transactions]).then(([numberOfTransactions, transactions]) => {
+            return {
+                page,
+                numberOfTransactions,
+                transactions,
+            };
+        });
+    }
+
 
     getTransactionById(userId: number, transactionId: number) {
         return this.prisma.transaction.findFirst({
@@ -30,6 +62,8 @@ export class TransactionsService {
 
 
     async createTransaction(userId: number, collectionId: number, dto: CreateTransactionDto) {
+        console.log('createTransaction', userId, collectionId, dto);
+        
         const transaction = await this.prisma.transaction.create({
             data: {
                 userId,
