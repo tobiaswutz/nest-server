@@ -17,6 +17,15 @@ export class TransactionsController {
         return this.transactionsService.getTransactionsByCollectionId(userid, collectionId);
     }
 
+
+
+    //get transactions paginated
+    @Get(':collectionId/:page/:take')
+    getTransactionByCollectionIdPaginated(@GetUser('id') userid: number, @Param('collectionId', ParseIntPipe) collectionId: number, @Param('page', ParseIntPipe) page: number, @Param('take', ParseIntPipe) take: number) {
+        return this.transactionsService.getTransactionsByCollectionIdPaginated(userid, collectionId, page, take);
+    }
+
+
     @Get(':transactionId')
     getTransactionById(@GetUser('id') userid: number, @Param('id', ParseIntPipe) transactionId: number) {
         return this.transactionsService.getTransactionById(userid, transactionId);
