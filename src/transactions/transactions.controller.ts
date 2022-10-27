@@ -19,7 +19,7 @@ export class TransactionsController {
 
 
 
-    //get transactions paginated
+    //get transactions paginated test
     @Get(':collectionId/:page/:take')
     getTransactionByCollectionIdPaginated(@GetUser('id') userid: number, @Param('collectionId', ParseIntPipe) collectionId: number, @Param('page', ParseIntPipe) page: number, @Param('take', ParseIntPipe) take: number) {
         return this.transactionsService.getTransactionsByCollectionIdPaginated(userid, collectionId, page, take);
