@@ -18,18 +18,17 @@ export class TransactionsService {
         });
     }
 
-    getTransactionsByCollectionIdPaginated(userId: number, collectionId: number, page: number, take: number) {
-
+    async getTransactionsByCollectionIdPaginated(userId: number, collectionId: number, page: number, take: number) {
         const skip = take * (page - 1);
 
-        const numberOfTransactions = this.prisma.transaction.count({
+        const numberOfTransactions = await this.prisma.transaction.count({
             where: {
                 userId,
                 collectionId,
             },
         });
 
-        const transactions = this.prisma.transaction.findMany({
+        const transactions = await this.prisma.transaction.findMany({
             where: {
                 userId,
                 collectionId,
@@ -41,14 +40,70 @@ export class TransactionsService {
             skip,
         });
 
-        return Promise.all([numberOfTransactions, transactions]).then(([numberOfTransactions, transactions]) => {
-            return {
-                page,
-                numberOfTransactions,
-                transactions,
-            };
-        });
+        return {
+            page,
+            numberOfTransactions,
+            transactions,
+        };
     }
+
+    async searchTransactionsByCollectionIdAndSearchStringPaginated(userId: number, collectionId: number, page: number, take: number, searchString: string) {
+        console.log('searchTransactionsByCollectionIdAndSearchStringPaginated', userId, collectionId, page, take, searchString);
+
+        const skip = take * (page - 1);
+
+        const numberOfTransactions = await this.prisma.transaction.count({
+            where: {
+                userId,
+                collectionId,
+                AND: {
+                    OR: [
+                        { baseSymbol: { contains: searchString, mode: 'insensitive', }, },
+                        { quoteSymbol: { contains: searchString, mode: 'insensitive', } }
+                    ],
+                },
+            },
+        });
+
+
+
+        const transactions = await this.prisma.transaction.findMany({
+            where: {
+                userId,
+                collectionId,
+                AND: {
+                    OR: [
+                        { baseSymbol: { contains: searchString, mode: 'insensitive', }, },
+                        { quoteSymbol: { contains: searchString, mode: 'insensitive', } }
+                    ],
+                },
+            },
+            orderBy: {
+                filledTime: 'desc',
+            },
+            take,
+            skip,
+        });
+
+
+
+        console.log('numberOfTransactions', numberOfTransactions);
+        console.log('transactions', transactions.length);
+
+
+        return {
+            page,
+            numberOfTransactions,
+            transactions,
+        };
+    }
+
+
+
+
+
+
+
 
 
     getTransactionById(userId: number, transactionId: number) {
@@ -63,7 +118,7 @@ export class TransactionsService {
 
     async createTransaction(userId: number, collectionId: number, dto: CreateTransactionDto) {
         console.log('createTransaction', userId, collectionId, dto);
-        
+
         const transaction = await this.prisma.transaction.create({
             data: {
                 userId,
